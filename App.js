@@ -1,21 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import {NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {StyleSheet} from 'react-native'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import ListarConsultas from './src/screens/ListarConsultas.js'
+import Login from './src/screens/login.js'
+
+const AuthStack = createStackNavigator()
+
+export default function Stack(){
+  return(
+    <NavigationContainer>
+      <AuthStack.Navigator headerMode='none' initialRouteName={AsyncStorage.getItem('jwt_key') !== undefined ? 'Login' : 'Main'} >
+        <AuthStack.Screen name = 'Login' component={Login} />
+        <AuthStack.Screen name = 'ListarConsultas' component={ListarConsultas} />
+      </AuthStack.Navigator>
+    </NavigationContainer>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
